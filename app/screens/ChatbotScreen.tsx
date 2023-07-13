@@ -301,7 +301,7 @@ const ChatbotScreen = ({
               keyboardType="numeric"
             />
             <SpacerV />
-            <Text style={{ color: Colors.Grey100 }}>{t("model.kyc.bot.sms_help")}</Text>
+            <Text style={{ color: Colors.Grey }}>{t("model.kyc.bot.sms_help")}</Text>
             <TouchableOpacity onPress={async () => await Linking.openURL("mailto:" + supportEmail)}>
               <Text style={AppStyles.link}>{supportEmail}</Text>
             </TouchableOpacity>

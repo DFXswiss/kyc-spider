@@ -40,7 +40,7 @@ const DfxModal = ({
             <View style={AppStyles.mla}>
               <IconButton
                 icon="close"
-                color={Colors.Grey400}
+                color={Colors.Grey}
                 onPress={() => setIsVisible(false)}
                 style={styles.closeIcon}
               />
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     margin: "auto",
     maxHeight: "90vh",
     maxWidth: "90vw",
-    backgroundColor: Colors.Grey100,
+    backgroundColor: Colors.Grey,
   },
   scrollContainer: {
     padding: 15,
