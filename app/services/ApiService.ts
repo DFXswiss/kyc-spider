@@ -1,12 +1,39 @@
 import { Environment } from "../env/Environment";
 import { ApiError } from "../models/ApiDto";
+import { Country } from "../models/Country";
+import { KycData } from "../models/KycData";
 import { Language } from "../models/Language";
+import { Settings, UserInfo } from "../models/User";
 
 const BaseUrl = Environment.api.baseUrl;
 const LanguageUrl = "language";
-const UserUrl = "kyc";
+const UserUrl = "user";
 
 // --- KYC --- //
+
+export const getUser = (): Promise<UserInfo> => {
+  return fetchFrom<UserInfo>(UserUrl);
+};
+
+export const putUser = (settings: Settings): Promise<any> => {
+  return fetchFrom<UserInfo>(UserUrl, "PUT", settings);
+};
+
+export const getCountries = (): Promise<Country[]> => {
+  return fetchFrom<Country[]>(`${UserUrl}/countries`);
+};
+
+export const putKyc = (): Promise<UserInfo> => {
+  return fetchFrom<UserInfo>(`${UserUrl}/kyc`, "PUT");
+};
+
+export const postKycData = (data: KycData): Promise<UserInfo> => {
+  return fetchFrom<UserInfo>(`${UserUrl}/kyc`, "POST", data);
+};
+
+export const postIncorporationCertificate = (files: File[]): Promise<UserInfo> => {
+  return postFiles<UserInfo>(`${UserUrl}/incorporationCertificate`, files);
+};
 
 // --- LANGUAGE --- //
 export const getLanguages = (): Promise<Language[]> => {
@@ -14,12 +41,12 @@ export const getLanguages = (): Promise<Language[]> => {
 };
 
 // --- HELPERS --- //
-const postFiles = (url: string, files: File[]): Promise<void> => {
+const postFiles = <T>(url: string, files: File[]): Promise<T> => {
   const formData = new FormData();
   for (const key in files) {
     formData.append("files", files[key]);
   }
-  return fetchFrom(url, "POST", formData, true);
+  return fetchFrom<T>(url, "POST", formData, true);
 };
 
 const fetchFrom = <T>(

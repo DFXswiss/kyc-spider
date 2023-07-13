@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import AppLayout from "../components/AppLayout";
-import { KycInfo, KycStatus } from "../models/User";
+import { UserInfo } from "../models/User";
 
 const KycScreen = () => {
   // data
-  const [kycInfo, setKycInfo] = useState<KycInfo>();
+  const [userInfo, setUserInfo] = useState<UserInfo>();
 
   return (
     <AppLayout
-      preventScrolling={kycInfo?.kycStatus === KycStatus.CHATBOT}
-      removeHeaderSpace={kycInfo?.kycStatus === KycStatus.CHATBOT}
+    // preventScrolling={userInfo?.kycStatus === KycStatus.CHATBOT}
+    // removeHeaderSpace={userInfo?.kycStatus === KycStatus.CHATBOT}
     >
       TODO: KYC screen
     </AppLayout>

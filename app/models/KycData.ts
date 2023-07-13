@@ -1,63 +1,26 @@
 import { Country } from "./Country";
-import { AccountType } from "./User";
+
+export enum AccountType {
+  PERSONAL = "Personal",
+  BUSINESS = "Business",
+  SOLE_PROPRIETORSHIP = "SoleProprietorship",
+}
+
+export interface Address {
+  street: string;
+  houseNumber: string;
+  city: string;
+  zip: string;
+  country: Country;
+}
 
 export interface KycData {
   accountType: AccountType;
+  mail: string;
+  phone: string;
   firstName: string;
   lastName: string;
-  street: string;
-  houseNumber: string;
-  zip: string;
-  location: string;
-  country: Country;
-
-  mail: string;
-  phone: string;
-
+  address: Address;
   organizationName: string;
-  organizationStreet: string;
-  organizationHouseNumber: string;
-  organizationLocation: string;
-  organizationZip: string;
-  organizationCountry: Country;
+  organizationAddress: Address;
 }
-
-export interface KycDataDto {
-  accountType: AccountType;
-  firstname: string;
-  surname: string;
-  street: string;
-  houseNumber: string;
-  zip: string;
-  location: string;
-  country: Country;
-
-  mail: string;
-  phone: string;
-
-  organizationName: string;
-  organizationStreet: string;
-  organizationHouseNumber: string;
-  organizationLocation: string;
-  organizationZip: string;
-  organizationCountry: Country;
-}
-
-export const toKycDataDto = (data: KycData): KycDataDto => ({
-  accountType: data.accountType,
-  firstname: data.firstName,
-  surname: data.lastName,
-  street: data.street,
-  houseNumber: data.houseNumber,
-  zip: data.zip,
-  location: data.location,
-  country: data.country,
-  mail: data.mail,
-  phone: data.phone,
-  organizationName: data.organizationName,
-  organizationStreet: data.organizationStreet,
-  organizationHouseNumber: data.organizationHouseNumber,
-  organizationLocation: data.organizationLocation,
-  organizationZip: data.organizationZip,
-  organizationCountry: data.organizationCountry,
-});
