@@ -3,7 +3,7 @@ import { first } from "rxjs/operators";
 import { Environment } from "../env/Environment";
 import i18n from "../i18n/i18n";
 import { Language } from "../models/Language";
-import { getLanguages } from "./KycApiService";
+import { getLanguages } from "./ApiService";
 import NotificationService from "./NotificationService";
 import StorageService from "./StorageService";
 

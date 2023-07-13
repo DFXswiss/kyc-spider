@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { SpacerH, SpacerV } from "../../elements/Spacers";
 import { Country } from "../../models/Country";
-import { AccountType, KycInfo } from "../../models/User";
-import { getCountries, putKycData } from "../../services/KycApiService";
+import { AccountType, UserInfo } from "../../models/User";
+import { getCountries, putKycData } from "../../services/ApiService";
 import AppStyles from "../../styles/AppStyles";
 import DfxPicker from "../form/DfxPicker";
 import Form from "../form/Form";
@@ -24,9 +24,9 @@ import IconButton from "../../components/util/IconButton";
 
 interface Props {
   code: string;
-  kycInfo?: KycInfo;
+  kycInfo?: UserInfo;
   kycData?: KycData;
-  onChanged: (kycData: KycData, info: KycInfo) => void;
+  onChanged: (kycData: KycData, info: UserInfo) => void;
 }
 
 const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
