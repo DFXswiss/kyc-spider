@@ -10,8 +10,19 @@ import SettingsService, { AppSettings } from "../services/SettingsService";
 import AppStyles from "../styles/AppStyles";
 import { resolve, openUrl } from "../utils/Utils";
 import DfxDropdown from "./form/DfxDropdown";
+import { putUser } from "../services/ApiService";
+import { Session } from "../services/AuthService";
+import withSession from "../hocs/withSession";
 
-const HeaderContent = ({ settings, drawer }: { settings?: AppSettings; drawer?: boolean }) => {
+const HeaderContent = ({
+  settings,
+  session,
+  drawer,
+}: {
+  settings?: AppSettings;
+  session?: Session;
+  drawer?: boolean;
+}) => {
   const { t } = useTranslation();
   const device = useDevice();
 
@@ -29,6 +40,10 @@ const HeaderContent = ({ settings, drawer }: { settings?: AppSettings; drawer?: 
     const language = resolve(update, getLanguage(selectedLanguage));
     if (language) {
       SettingsService.updateSettings({ language: language.symbol });
+
+      if (session?.isLoggedIn) {
+        putUser({ language });
+      }
     }
   };
 
@@ -67,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withSettings(HeaderContent);
+export default withSession(withSettings(HeaderContent));
