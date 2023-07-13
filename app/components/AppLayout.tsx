@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: "center",
     padding: Sizes.AppPadding,
-    backgroundColor: Colors.Primary,
+    backgroundColor: Colors.White,
   },
   appContainer: {
     width: "100%",

@@ -17,7 +17,7 @@ const Header = () => {
       {!device.SM && <IconButton icon="menu" onPress={() => nav.toggleDrawer()} style={AppStyles.mra} />}
 
       <TouchableOpacity activeOpacity={1} style={styles.logoTouch}>
-        <Image style={styles.logo} source={require("../assets/icon.png")} />
+        <Image style={styles.logo} source={require("../assets/kyc-spider-logo.png")} />
       </TouchableOpacity>
 
       <View style={[styles.container, !device.SM && AppStyles.noDisplay]}>
@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     maxWidth: Sizes.AppWidth,
   },
   logoTouch: {
-    width: 104,
-    height: 39,
+    width: 208,
+    height: 78,
   },
   logo: {
     flex: 1,

@@ -7,7 +7,7 @@ export default StyleSheet.create({
   // layout
   container: {
     flex: 1,
-    backgroundColor: Colors.Grey100,
+    backgroundColor: Colors.Grey,
   },
   containerHorizontal: {
     flexDirection: "row",
@@ -21,7 +21,7 @@ export default StyleSheet.create({
   dialog: {
     maxWidth: 300,
     marginHorizontal: "auto",
-    backgroundColor: Colors.Grey100,
+    backgroundColor: Colors.Grey,
     maxHeight: "90vh",
   },
   cell: {

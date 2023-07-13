@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 30,
     backgroundColor: Colors.White,
-    borderBottomColor: Colors.Grey100,
+    borderBottomColor: Colors.Grey,
     ...DefaultCursor,
   },
   firstRow: {
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
     marginVertical: 3,
   },
   cellTitle: {
-    color: Colors.Grey400,
+    color: Colors.Grey,
   },
 });

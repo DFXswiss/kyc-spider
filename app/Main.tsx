@@ -22,7 +22,7 @@ const DrawerContent = () => {
     <>
       <View
         style={[
-          { height: "100%", padding: Sizes.AppPadding, backgroundColor: Colors.Grey100 },
+          { height: "100%", padding: Sizes.AppPadding, backgroundColor: Colors.Grey },
           device.SM && AppStyles.noDisplay,
         ]}
       >

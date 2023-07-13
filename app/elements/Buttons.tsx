@@ -14,7 +14,7 @@ export const DfxButton = ({ link, header, loading, disabled, style, ...props }: 
       labelStyle={[
         header && { color: Colors.White },
         link && AppStyles.buttonLink,
-        props.mode === "contained" && { color: isDisabled ? Colors.Grey400 : Colors.White },
+        props.mode === "contained" && { color: isDisabled ? Colors.Grey : Colors.White },
       ]}
       style={[style, { borderColor: header ? Colors.White : Colors.Primary }]}
       {...props}

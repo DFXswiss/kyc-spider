@@ -8,10 +8,10 @@ AppTheme.colors = {
     primary: Colors.Primary,
     accent: Colors.Primary,
     text: Colors.Black,
-    background: Colors.Grey100,
-    placeholder: Colors.Grey400,
-    surface: Colors.Grey100,
-    onSurface: Colors.Grey100,
+    background: Colors.Grey,
+    placeholder: Colors.Grey,
+    surface: Colors.Grey,
+    onSurface: Colors.Grey,
   },
 };
 AppTheme.fonts = {
