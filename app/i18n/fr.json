@@ -1,6 +1,6 @@
 {
   "common": {
-    "general": {},
+    "general": {"select_language":"Sélectionner la langue"},
     "action": {},
     "feedback": {},
     "validation": {},
