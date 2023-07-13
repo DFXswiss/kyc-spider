@@ -4,6 +4,7 @@ import { Country } from "../models/Country";
 import { KycData } from "../models/KycData";
 import { Language } from "../models/Language";
 import { Settings, UserInfo } from "../models/User";
+import AuthService, { Session } from "./AuthService";
 
 const BaseUrl = Environment.api.baseUrl;
 const LanguageUrl = "language";
@@ -53,13 +54,15 @@ const fetchFrom = <T>(
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE" = "GET",
   data?: any,
-  noJson?: boolean
+  noJson?: boolean,
+  rawResponse?: boolean
 ): Promise<T> => {
+  const init = buildInit(method, AuthService.Session, data, noJson);
   return (
-    fetch(`${BaseUrl}/${url}`, buildInit(method, data, noJson))
+    fetch(`${BaseUrl}/${url}`, init)
       .then((response) => {
         if (response.ok) {
-          return response.json().catch(() => undefined);
+          return rawResponse ? response : response.json().catch(() => undefined);
         }
         return response.json().then((body) => {
           throw body;
@@ -67,15 +70,25 @@ const fetchFrom = <T>(
       })
       // TODO: this throws state update error (on HomeScreen)
       .catch((error: ApiError) => {
+        if (error.statusCode === 401) {
+          AuthService.deleteSession();
+        }
+
         throw error;
       })
   );
 };
 
-const buildInit = (method: "GET" | "PUT" | "POST" | "DELETE", data?: any, noJson?: boolean): RequestInit => ({
+const buildInit = (
+  method: "GET" | "PUT" | "POST" | "DELETE",
+  session?: Session,
+  data?: any,
+  noJson?: boolean
+): RequestInit => ({
   method: method,
   headers: {
     ...(noJson ? undefined : { "Content-Type": "application/json" }),
+    Authorization: session?.accessToken ? "Bearer " + session.accessToken : "",
   },
   body: noJson ? data : JSON.stringify(data),
 });

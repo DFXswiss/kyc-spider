@@ -1,8 +1,5 @@
 import jwtDecode from "jwt-decode";
-import { Observable, ReplaySubject } from "rxjs";
-import StorageService from "./StorageService";
-
-const SessionKey = "session";
+import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
 
 export interface ISession {
   accessToken?: string;
@@ -27,8 +24,11 @@ export class Session implements ISession {
     return this.expires != null && !(Date.now() < this.expires.getTime());
   }
 
-  constructor(session?: ISession) {
-    this.accessToken = session?.accessToken;
+  constructor(reference?: string) {
+    // TODO: generate access token, if reference is there
+    this.accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYW5kYXRvciI6IkE4RUMxQUMyLUI3MjEtRUUxMS1BOUJCLTAwMEQzQTQ4MTRDNyIsInVzZXIiOiJ1c2VyLTEiLCJpYXQiOjE2ODkyNzg0NTIsImV4cCI6MTY4OTQ1MTI1Mn0.PrX_-fB9sr8wSMS93tX62A1WyCGx4XLZsv9fSjIk-Do";
+
     if (this.accessToken) {
       const jwt: JWT = jwtDecode(this.accessToken);
       this.expires = new Date(jwt.exp * 1000);
@@ -37,28 +37,22 @@ export class Session implements ISession {
 }
 
 class AuthServiceClass {
-  private session$ = new ReplaySubject<Session>();
+  private session$ = new BehaviorSubject<Session | undefined>(undefined);
 
-  constructor() {
-    this.Session.then((session) => this.session$.next(session)).catch(() => this.session$.next(new Session()));
+  public get Session(): Session | undefined {
+    return this.session$.value;
   }
 
-  public get Session$(): Observable<Session> {
+  public get Session$(): Observable<Session | undefined> {
     return this.session$;
   }
 
-  public get Session(): Promise<Session> {
-    return StorageService.getValue<ISession>(SessionKey).then((session) => new Session(session));
+  public updateSession(reference?: string): void {
+    this.session$.next(new Session(reference));
   }
 
-  public updateSession(session: ISession): Promise<void> {
-    return StorageService.storeValue(SessionKey, session).then(() => this.session$.next(new Session(session)));
-  }
-
-  public deleteSession(): Promise<void> {
-    return this.updateSession({
-      accessToken: undefined,
-    });
+  public deleteSession(): void {
+    this.updateSession(undefined);
   }
 }
 
