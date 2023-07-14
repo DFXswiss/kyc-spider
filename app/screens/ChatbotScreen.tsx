@@ -274,7 +274,7 @@ const ChatbotScreen = ({
   return (
     <View style={styles.container}>
       {/* Loading */}
-      {isLoading && <Loading size="large" />}
+      {isLoading && <Loading size="large" style={{ marginTop: 100 }} />}
       {/* SMS screen */}
       {!isLoading && !isSMSCompleted && (
         <View style={styles.container}>
