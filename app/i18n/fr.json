@@ -51,38 +51,38 @@
         "initiating": "La vérification est en préparation, cela peut prendre un certain temps. Nous vous prions de patienter.",
         "status": "Statut",
         "status_name": {
-          "NotStarted": "Pas démarré",
-          "InProgress": "En cours de traitement",
-          "Comnpleted": "Achevé",
+          "NotStarted": "Pas commencé",
+          "InProgress": "En cours",
+          "Completed": "Terminé",
           "Paused": "Interrompu"
         },
         "step_name": {
-          "UserData": "Données des utilisateurs",
+          "UserData": "Données personnelles",
           "FileUpload": "Téléchargement de fichiers",
-          "Chatbot": "chatbot",
-          "OnlineId": "identification en ligne",
-          "VideoId": "identification en vidéo"
+          "Chatbot": "Chatbot",
+          "OnlineId": "Identification en ligne",
+          "VideoId": "Identification en vidéo"
         },
         "step_status": {
-          "NotStarted": "Pas démarré",
-          "InProgress": "En cours de traitement",
-          "Failed": "Échec",
+          "NotStarted": "Pas commencé",
+          "InProgress": "En cours",
+          "Failed": "Échoué",
           "Completed": "Terminé"
         },
         "upload_certificate": "Veuillez télécharger l'extrait du registre du commerce de votre organisation.",
         "bot": {
-        "sms_header": "Notre partenaire de vérification de compte (KYC Spider) vous a envoyé un code par SMS.",
-        "sms_code": "Veuillez entre le code ici :",
-        "sms_placeholder": "Votre code SMS",
-        "sms_help": "Si vous n'avez pas reçu le code SMS, veuillez nous contacter sur",
-        "error": {
-          "missing_session_id": "Erreur : Please try again later.",
-          "validation": "Erreur : Veuillez vérifier votre réponse.",
-          "wrong_sms": "Erreur : Code SMS erroné."
-        },
-        "not_finished": "Erreur ! Le chatbot n'est pas encore terminé!"
+          "sms_header": "Notre partenaire de vérification de compte (KYC Spider) vous a envoyé un code par SMS.",
+          "sms_code": "Veuillez entre le code ici :",
+          "sms_placeholder": "Votre code SMS",
+          "sms_help": "Si vous n'avez pas reçu le code SMS, veuillez nous contacter sur",
+          "error": {
+            "missing_session_id": "Erreur : Please try again later.",
+            "validation": "Erreur : Veuillez vérifier votre réponse.",
+            "wrong_sms": "Erreur : Code SMS erroné."
+          },
+          "not_finished": "Erreur ! Le chatbot n'est pas encore terminé!"
+        }
       }
-    }
     }
   }
 }
