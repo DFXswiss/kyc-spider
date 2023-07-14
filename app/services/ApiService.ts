@@ -33,7 +33,7 @@ export const postKycData = (data: KycData): Promise<UserInfo> => {
 };
 
 export const postIncorporationCertificate = (files: File[]): Promise<UserInfo> => {
-  return postFiles<UserInfo>(`${UserUrl}/incorporationCertificate`, files);
+  return postFiles<UserInfo>(`${UserUrl}/incorporation-certificate`, files);
 };
 
 // --- LANGUAGE --- //
