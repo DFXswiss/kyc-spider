@@ -38,6 +38,20 @@ jobs:
       - name: Select environment
         run: cp -f app/env/Environment.dev.ts app/env/Environment.ts
 
+      - name: Update JWT secret
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "{JWT_SECRET}"
+          replace: ${{ secrets.JWT_SECRET }}
+          regex: false
+
+      - name: Update mandator
+        uses: jacobtomlinson/gha-find-replace@v3
+        with:
+          find: "{MANDATOR}"
+          replace: ${{ secrets.MANDATOR }}
+          regex: false
+
       - name: Build for web
         run: expo build:web
 
