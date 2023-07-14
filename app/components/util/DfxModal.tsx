@@ -14,6 +14,7 @@ const DfxModal = ({
   title,
   children,
   isBeta,
+  dismissable,
 }: {
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
@@ -21,6 +22,7 @@ const DfxModal = ({
   title: string;
   children: ReactNode;
   isBeta?: boolean;
+  dismissable?: boolean;
 }) => {
   return (
     <Portal>
@@ -28,6 +30,7 @@ const DfxModal = ({
         visible={isVisible}
         onDismiss={() => setIsVisible(false)}
         contentContainerStyle={[styles.container, style]}
+        dismissable={dismissable}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={[AppStyles.containerHorizontal]}>
@@ -40,7 +43,7 @@ const DfxModal = ({
             <View style={AppStyles.mla}>
               <IconButton
                 icon="close"
-                color={Colors.Grey}
+                color={Colors.Primary}
                 onPress={() => setIsVisible(false)}
                 style={styles.closeIcon}
               />
