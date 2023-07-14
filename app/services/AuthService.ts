@@ -1,5 +1,7 @@
 import jwtDecode from "jwt-decode";
-import { BehaviorSubject, Observable, ReplaySubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import sign from "jwt-encode";
+import { Environment } from "../env/Environment";
 
 export interface ISession {
   accessToken?: string;
@@ -25,9 +27,12 @@ export class Session implements ISession {
   }
 
   constructor(reference?: string) {
-    // TODO: generate access token, if reference is there
-    this.accessToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYW5kYXRvciI6IkE4RUMxQUMyLUI3MjEtRUUxMS1BOUJCLTAwMEQzQTQ4MTRDNyIsInVzZXIiOiJ1c2VyLTEiLCJpYXQiOjE2ODkyNzg0NTIsImV4cCI6MTY4OTQ1MTI1Mn0.PrX_-fB9sr8wSMS93tX62A1WyCGx4XLZsv9fSjIk-Do";
+    const data = {
+      user: reference,
+      mandator: Environment.mandator,
+    };
+
+    if (reference) this.accessToken = sign(data, Environment.api.jwtSecret);
 
     if (this.accessToken) {
       const jwt: JWT = jwtDecode(this.accessToken);
