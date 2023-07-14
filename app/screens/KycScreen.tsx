@@ -127,6 +127,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
         setIsVisible={setIsInProgress}
         title={t("model.user.edit")}
         style={{ width: 500 }}
+        dismissable={false}
       >
         <KycDataEdit onChanged={setUserInfo} />
       </DfxModal>
@@ -188,7 +189,7 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
       case KycStatus.NOT_STARTED:
         return "action.start";
       case KycStatus.IN_PROGRESS:
-        return "action.continue";
+        return "action.next";
       case KycStatus.PAUSED:
         return "action.resume";
       default:
@@ -204,7 +205,7 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
         <H2 text={t("model.kyc.title")} />
         {userInfo && (
           <Paragraph>
-            {t("model.kyc.status")}: {t(userInfo?.kycStatus ?? "")}
+            {t("model.kyc.status")}: {t(`model.kyc.status_name.${userInfo?.kycStatus}`)}
           </Paragraph>
         )}
       </View>
