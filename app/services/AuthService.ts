@@ -1,6 +1,6 @@
+import jwtEncode from "jwt-encode";
 import jwtDecode from "jwt-decode";
 import { BehaviorSubject, Observable } from "rxjs";
-import sign from "jwt-encode";
 import { Environment } from "../env/Environment";
 
 export interface ISession {
@@ -26,18 +26,15 @@ export class Session implements ISession {
     return this.expires != null && !(Date.now() < this.expires.getTime());
   }
 
-  constructor(reference?: string) {
+  constructor(reference: string) {
     const data = {
       user: reference,
       mandator: Environment.mandator,
     };
 
-    if (reference) this.accessToken = sign(data, Environment.api.jwtSecret);
-
-    if (this.accessToken) {
-      const jwt: JWT = jwtDecode(this.accessToken);
-      this.expires = new Date(jwt.exp * 1000);
-    }
+    this.accessToken = jwtEncode(data, Environment.api.jwtSecret);
+    const jwt: JWT = jwtDecode(this.accessToken);
+    this.expires = new Date(jwt.exp * 1000);
   }
 }
 
@@ -52,12 +49,12 @@ class AuthServiceClass {
     return this.session$;
   }
 
-  public updateSession(reference?: string): void {
+  public updateSession(reference: string): void {
     this.session$.next(new Session(reference));
   }
 
   public deleteSession(): void {
-    this.updateSession(undefined);
+    this.session$.next(undefined);
   }
 }
 
