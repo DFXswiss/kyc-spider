@@ -42,8 +42,8 @@
           "SoleProprietorship": "Sole proprietorship"
         },
         "city": "City",
-        "organization_info": "Organisation",
-        "organization_name": "Organisation name",
+        "organization_info": "Organization",
+        "organization_name": "Organization name",
         "contact_data": "Contact data"
       },
       "kyc": {
@@ -59,9 +59,9 @@
         "step_name": {
           "UserData": "User data",
           "FileUpload": "File upload",
-          "Chatbot": "Chatbot-Onboarding",
-          "OnlineId": "Online-Identification",
-          "VideoId": "Video-Identification"
+          "Chatbot": "Chatbot onboarding",
+          "OnlineId": "Online identification",
+          "VideoId": "Video identification"
         },
         "step_status": {
           "NotStarted": "Not started",

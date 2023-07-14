@@ -38,7 +38,7 @@
         "street": "Via",
         "house_number": "Numero civico",
         "zip": "CAP",
-        "city": "Località",
+        "city": "Città",
         "country": "Paese",
         "organization_info": "Organizzazione",
         "organization_name": "Nome dell'organizzazione",
@@ -49,7 +49,7 @@
       "kyc": {
         "title": "KYC Demo",
         "initiating": "La verifica è in preparazione, potrebbe volerci un po' di tempo. Ti chiediamo pazienza",
-        "status": "Stato del KYC",
+        "status": "Stato",
         "status_name": {
           "NotStarted": "Non iniziato",
           "InProgress": "In corso",
@@ -59,9 +59,9 @@
         "step_name": {
           "UserData": "Dati utente",
           "FileUpload": "Caricamento dei file",
-          "Chatbot": "Chatbot-Onboarding",
-          "OnlineId": "Online-Identifikation",
-          "VideoId": "Video-Identifikation"
+          "Chatbot": "Chatbot",
+          "OnlineId": "Identificazione online",
+          "VideoId": "Identificazione video"
         },
         "step_status": {
           "NotStarted": "Non iniziato",
