@@ -1,9 +1,13 @@
 {
   "common": {
-    "general": {"select_language":"Sélectionner la langue"},
+    "general": { "select_language": "Sélectionner la langue" },
     "action": {},
     "feedback": {},
     "validation": {},
-    "model": {}
+    "model": {
+      "kyc": {
+        "initiating": "La vérification est en préparation, cela peut prendre un certain temps. Nous vous prions de patienter."
+      }
+    }
   }
 }

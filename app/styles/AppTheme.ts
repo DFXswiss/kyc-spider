@@ -9,9 +9,11 @@ AppTheme.colors = {
     accent: Colors.Primary,
     text: Colors.Black,
     background: Colors.Grey,
-    placeholder: Colors.Grey,
+    placeholder: Colors.Disabled,
     surface: Colors.Grey,
     onSurface: Colors.Grey,
+    disabled: Colors.White,
+    error: Colors.Error,
   },
 };
 AppTheme.fonts = {

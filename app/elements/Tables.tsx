@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
     marginVertical: 3,
   },
   cellTitle: {
-    color: Colors.Grey,
+    color: Colors.Disabled,
   },
 });
