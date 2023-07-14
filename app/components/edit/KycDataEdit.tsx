@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { SpacerH, SpacerV } from "../../elements/Spacers";
 import { Country } from "../../models/Country";
-import { AccountType, UserInfo } from "../../models/User";
-import { getCountries, putKycData } from "../../services/ApiService";
+import { UserInfo } from "../../models/User";
+import { getCountries, postKycData } from "../../services/ApiService";
 import AppStyles from "../../styles/AppStyles";
 import DfxPicker from "../form/DfxPicker";
 import Form from "../form/Form";
@@ -18,37 +18,31 @@ import { useDevice } from "../../hooks/useDevice";
 import { DfxButton } from "../../elements/Buttons";
 import ButtonContainer from "../util/ButtonContainer";
 import { createRules } from "../../utils/Utils";
-import { KycData } from "../../models/KycData";
+import { AccountType, KycData } from "../../models/KycData";
 import Loading from "../util/Loading";
-import IconButton from "../../components/util/IconButton";
 
 interface Props {
-  code: string;
-  kycInfo?: UserInfo;
-  kycData?: KycData;
-  onChanged: (kycData: KycData, info: UserInfo) => void;
+  onChanged: (info: UserInfo) => void;
 }
 
-const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
+const KycDataEdit = ({ onChanged }: Props) => {
   const { t } = useTranslation();
   const device = useDevice();
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<KycData>({ defaultValues: { ...kycData, accountType: AccountType.PERSONAL } });
+  } = useForm<KycData>({ defaultValues: { accountType: AccountType.PERSONAL } });
   const accountType = useWatch({ control, name: "accountType" });
-  const country = useWatch({ control, name: "country" });
+  const country = useWatch({ control, name: "address.country" });
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [wantsEditMail, setWantsEditMail] = useState(false);
-  const [wantsEditPhone, setWantsEditPhone] = useState(false);
   const [error, setError] = useState<string>();
   const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
-    getCountries(code)
+    getCountries()
       .then(setCountries)
       .catch(() => NotificationService.error(t("feedback.load_failed")))
       .finally(() => setIsLoading(false));
@@ -58,31 +52,31 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
     setIsSaving(true);
     setError(undefined);
 
-    putKycData(updatedData, code)
-      .then((info) => onChanged(updatedData, info))
+    postKycData(updatedData)
+      .then((info) => onChanged(info))
       .catch(() => setError(""))
       .finally(() => setIsSaving(false));
   };
 
   const rules: any = createRules({
-    phone: !kycInfo?.blankedPhone && Validations.Required,
-    mail: [Validations.Mail, !kycInfo?.blankedMail && Validations.Required],
+    phone: Validations.Required,
+    mail: [Validations.Mail, Validations.Required],
 
     accountType: Validations.Required,
     firstName: Validations.Required,
     lastName: Validations.Required,
-    street: Validations.Required,
-    houseNumber: Validations.Required,
-    zip: Validations.Required,
-    location: Validations.Required,
-    country: Validations.Required,
+    ["address.street"]: Validations.Required,
+    ["address.houseNumber"]: Validations.Required,
+    ["address.zip"]: Validations.Required,
+    ["address.city"]: Validations.Required,
+    ["address.country"]: Validations.Required,
 
     organizationName: Validations.Required,
-    organizationStreet: Validations.Required,
-    organizationHouseNumber: Validations.Required,
-    organizationLocation: Validations.Required,
-    organizationZip: Validations.Required,
-    organizationCountry: Validations.Required,
+    ["organizationAddress.street"]: Validations.Required,
+    ["organizationAddress.houseNumber"]: Validations.Required,
+    ["organizationAddress.city"]: Validations.Required,
+    ["organizationAddress.zip"]: Validations.Required,
+    ["organizationAddress.country"]: Validations.Required,
   });
 
   return isLoading ? (
@@ -91,14 +85,14 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
     <Form control={control} rules={rules} errors={errors} disabled={isSaving} onSubmit={handleSubmit(onSubmit)}>
       <SpacerV />
       <H3 text={t("model.user.kyc_data")} />
-      {/* <Picker
+
+      <DfxPicker
         name="accountType"
         label={t("model.user.account_type")}
         items={Object.values(AccountType)}
         labelFunc={(i) => t(`model.user.${i.toLowerCase()}`)}
-        disabled
       />
-      <SpacerV /> */}
+      <SpacerV />
 
       {accountType !== AccountType.PERSONAL && <H4 text={t("model.user.personal_info")} />}
 
@@ -108,20 +102,23 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
         <Input name="lastName" label={t("model.user.last_name")} />
       </View>
       <SpacerV />
+
       <View style={AppStyles.containerHorizontalWrap}>
-        <Input name="street" label={t("model.user.street")} />
+        <Input name="address.street" label={t("model.user.street")} />
         <SpacerH />
-        <Input name="houseNumber" label={t("model.user.house_number")} />
+        <Input name="address.houseNumber" label={t("model.user.house_number")} />
       </View>
       <SpacerV />
+
       <View style={AppStyles.containerHorizontalWrap}>
-        <Input name="zip" label={t("model.user.zip")} />
+        <Input name="address.zip" label={t("model.user.zip")} />
         <SpacerH />
-        <Input name="location" label={t("model.user.location")} />
+        <Input name="address.city" label={t("model.user.city")} />
       </View>
       <SpacerV />
+
       <DfxPicker
-        name="country"
+        name="address.country"
         label={t("model.user.country")}
         items={countries}
         idFunc={(i) => i.id}
@@ -134,20 +131,23 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
           <H4 text={t("model.user.organization_info")} />
           <Input name="organizationName" label={t("model.user.organization_name")} />
           <SpacerV />
+
           <View style={AppStyles.containerHorizontalWrap}>
-            <Input name="organizationStreet" label={t("model.user.street")} />
+            <Input name="organizationAddress.street" label={t("model.user.street")} />
             <SpacerH />
-            <Input name="organizationHouseNumber" label={t("model.user.house_number")} />
+            <Input name="organizationAddress.houseNumber" label={t("model.user.house_number")} />
           </View>
           <SpacerV />
+
           <View style={AppStyles.containerHorizontalWrap}>
-            <Input name="organizationZip" label={t("model.user.zip")} />
+            <Input name="organizationAddress.zip" label={t("model.user.zip")} />
             <SpacerH />
-            <Input name="organizationLocation" label={t("model.user.location")} />
+            <Input name="organizationAddress.city" label={t("model.user.city")} />
           </View>
           <SpacerV />
+
           <DfxPicker
-            name="organizationCountry"
+            name="organizationAddress.country"
             label={t("model.user.country")}
             items={countries}
             idFunc={(i) => i.id}
@@ -159,40 +159,16 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
 
       <H3 text={t("model.user.contact_data")} />
 
-      {kycInfo?.blankedMail && !wantsEditMail ? (
-        <View style={styles.editable}>
-          <Input name="mail" label={t("model.user.mail")} value={kycInfo.blankedMail} disabled />
-          <IconButton
-            icon="square-edit-outline"
-            onPress={() => {
-              setWantsEditMail(true);
-            }}
-          />
-        </View>
-      ) : (
-        <Input name="mail" label={t("model.user.mail")} valueHook={(v: string) => v.trim()} />
-      )}
-
+      <Input name="mail" label={t("model.user.mail")} valueHook={(v: string) => v.trim()} />
       <SpacerV />
-      {kycInfo?.blankedPhone && !wantsEditPhone ? (
-        <View style={styles.editable}>
-          <Input name="phone" label={t("model.user.mobile_number")} value={kycInfo.blankedPhone} disabled />
-          <IconButton
-            icon="square-edit-outline"
-            onPress={() => {
-              setWantsEditPhone(true);
-            }}
-          />
-        </View>
-      ) : (
-        <PhoneNumber
-          name="phone"
-          label={t("model.user.mobile_number")}
-          placeholder="1761212112"
-          wrap={!device.SM}
-          country={country?.symbol}
-        />
-      )}
+
+      <PhoneNumber
+        name="phone"
+        label={t("model.user.mobile_number")}
+        placeholder="1761212112"
+        wrap={!device.SM}
+        country={country?.symbol}
+      />
       <SpacerV />
 
       {error != null && (
@@ -210,13 +186,5 @@ const KycDataEdit = ({ code, kycInfo, kycData, onChanged }: Props) => {
     </Form>
   );
 };
-
-const styles = StyleSheet.create({
-  editable: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
 
 export default KycDataEdit;

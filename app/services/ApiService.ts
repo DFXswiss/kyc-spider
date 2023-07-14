@@ -29,7 +29,7 @@ export const putKyc = (): Promise<UserInfo> => {
 };
 
 export const postKycData = (data: KycData): Promise<UserInfo> => {
-  return fetchFrom<UserInfo>(`${UserUrl}/kyc`, "POST", data);
+  return fetchFrom<UserInfo>(`${UserUrl}/data`, "POST", data);
 };
 
 export const postIncorporationCertificate = (files: File[]): Promise<UserInfo> => {

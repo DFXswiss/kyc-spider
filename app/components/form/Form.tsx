@@ -24,7 +24,9 @@ const Form = ({ children, control, rules, errors, disabled = false, onSubmit }: 
   const enrichElements = (elements: ReactNode): ReactElement[] | undefined => {
     if (!elements) return undefined;
 
-    return (Array.isArray(elements) ? [...elements] : [elements]).map((element, i) => enrichElement(element as ReactElement, i));
+    return (Array.isArray(elements) ? [...elements] : [elements]).map((element, i) =>
+      enrichElement(element as ReactElement, i)
+    );
   };
 
   const enrichElement = (element: ReactElement & RefAttributes<any>, index: number): ReactElement => {
@@ -42,7 +44,7 @@ const Form = ({ children, control, rules, errors, disabled = false, onSubmit }: 
         ref: element.ref,
         control: control,
         rules: rules ? rules[element.props.name] : undefined,
-        error: errors[element.props.name],
+        error: element.props.name.split(".").reduce((prev: any, curr: string) => prev?.[curr], errors),
         disabled: element.props.disabled || disabled,
         onSubmit: onSubmit,
       };
