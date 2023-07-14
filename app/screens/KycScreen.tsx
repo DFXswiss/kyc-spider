@@ -24,6 +24,7 @@ import Iframe from "../components/util/Iframe";
 import ChatbotScreen from "./ChatbotScreen";
 import { groupBy, pickDocuments, sleep } from "../utils/Utils";
 import Colors from "../config/Colors";
+import { ApiError } from "../models/ApiDto";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -45,10 +46,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
 
   useEffect(() => {
     const params = route.params as any;
-    if (!params?.ref) {
-      onLoadFailed();
-      return nav.navigate(Routes.NotFound);
-    }
+    if (!params?.ref) return userNotFound();
 
     AuthService.updateSession(params.ref);
   }, []);
@@ -61,10 +59,12 @@ const KycScreen = ({ session }: { session?: Session }) => {
           setUserInfo(result);
           if (result.language) SettingsService.updateSettings({ language: result.language.symbol });
         })
-        .catch(onLoadFailed)
+        .catch((e: ApiError) => (e.statusCode === 401 ? userNotFound() : onLoadFailed))
         .finally(() => setIsLoading(false));
     }
   }, [session]);
+
+  const userNotFound = () => nav.navigate(Routes.NotFound);
 
   const onLoadFailed = () => NotificationService.error(t("feedback.load_failed"));
 
