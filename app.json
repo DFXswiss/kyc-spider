@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "KYC Spider Demo",
-    "slug": "kyc-spider-demo",
+    "slug": "spider-demo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
