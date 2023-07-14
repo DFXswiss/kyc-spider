@@ -5,6 +5,10 @@ import NotificationService from "../services/NotificationService";
 import { DocumentPickerOptions } from "expo-document-picker";
 import * as DocumentPicker from "expo-document-picker";
 
+export type KeyType<T, U> = {
+  [K in keyof T]: T[K] extends U ? K : never;
+}[keyof T];
+
 export const updateObject = (obj?: any, update?: any) => (obj ? { ...obj, ...update } : undefined);
 export const join = (array: any[], separator: string = ", ") => array.reduce((prev, curr) => (curr ? (prev ? prev + separator + curr : curr) : prev), "");
 export const resolve = <T>(update: SetStateAction<T>, value: T): T => update instanceof Function ? update(value) : update;
@@ -55,3 +59,10 @@ export const toBase64 = (file: File): Promise<string | undefined> => {
 };
 
 export const formatAmount = (amount?: number): string => amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") ?? "";
+
+export const groupBy = <T, U>(list: T[], key: KeyType<T, U>): Map<U, T[]> => {
+  return list.reduce(
+    (map, item) => map.set(item[key] as unknown as U, (map.get(item[key] as unknown as U) ?? []).concat(item)),
+    new Map<U, T[]>()
+  );
+};

@@ -22,7 +22,7 @@ import DfxModal from "../components/util/DfxModal";
 import KycDataEdit from "../components/edit/KycDataEdit";
 import Iframe from "../components/util/Iframe";
 import ChatbotScreen from "./ChatbotScreen";
-import { sleep } from "../utils/Utils";
+import { groupBy, sleep } from "../utils/Utils";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -148,6 +148,14 @@ const KycScreen = ({ session }: { session?: Session }) => {
 const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: () => void }) => {
   const { t } = useTranslation();
 
+  const steps = Array.from(groupBy(userInfo?.kycSteps ?? [], "name").entries()).map(
+    ([_, steps]) =>
+      steps.find((s) => s.status === KycStepStatus.IN_PROGRESS) ??
+      steps.find((s) => s.status === KycStepStatus.NOT_STARTED) ??
+      steps.find((s) => s.status === KycStepStatus.COMPLETED) ??
+      steps[0]
+  );
+
   const continueLabel = (): string => {
     switch (userInfo?.kycStatus) {
       case KycStatus.NOT_STARTED:
@@ -179,7 +187,7 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
       {userInfo && (
         <>
           <DataTable>
-            {userInfo?.kycSteps.map((step, i) => (
+            {steps.map((step, i) => (
               <CompactRow key={i}>
                 <CompactCell>{t(`model.kyc.step_name.${step.name}`)}</CompactCell>
                 <CompactCell>{t(`model.kyc.step_status.${step.status}`)}</CompactCell>
