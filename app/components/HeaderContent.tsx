@@ -66,7 +66,7 @@ const HeaderContent = ({
           labelProp="foreignName"
           title={t("general.select_language")}
           style={styles.button}
-          header={!drawer}
+          mode={drawer ? "contained" : "outlined"}
         ></DfxDropdown>
       )}
     </View>

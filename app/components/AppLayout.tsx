@@ -4,7 +4,6 @@ import { FAB, Portal } from "react-native-paper";
 import Colors from "../config/Colors";
 import Sizes from "../config/Sizes";
 import { SpacerV } from "../elements/Spacers";
-import withSettings from "../hocs/withSettings";
 import { AppSettings } from "../services/SettingsService";
 import AppStyles from "../styles/AppStyles";
 import Header from "./Header";
@@ -16,7 +15,7 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
-const AppLayout = ({ settings, preventScrolling, removeHeaderSpace, children }: AppLayoutProps) => {
+const AppLayout = ({ preventScrolling, removeHeaderSpace, children }: AppLayoutProps) => {
   const dimensions = useWindowDimensions();
   const [contentSize, setContentSize] = useState(0);
   const [contentOffset, setContentOffset] = useState(0);
@@ -85,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withSettings(AppLayout);
+export default AppLayout;

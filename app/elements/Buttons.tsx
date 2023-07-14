@@ -4,7 +4,7 @@ import Colors from "../config/Colors";
 import AppStyles, { DefaultCursor } from "../styles/AppStyles";
 
 // TODO: use the paper button props?
-export const DfxButton = ({ link, loading, disabled, style, ...props }: any) => {
+export const DfxButton = ({ link, header, loading, disabled, style, ...props }: any) => {
   const isDisabled = loading || disabled;
   return (
     <Button
@@ -12,11 +12,11 @@ export const DfxButton = ({ link, loading, disabled, style, ...props }: any) => 
       disabled={isDisabled}
       contentStyle={[props.contentStyle, isDisabled && DefaultCursor]}
       labelStyle={[
-        { color: Colors.White },
+        header && { color: Colors.White },
         link && AppStyles.buttonLink,
-        props.mode === "contained" && { color: isDisabled ? Colors.Grey : Colors.Primary },
+        props.mode === "contained" && { color: isDisabled ? Colors.Grey : Colors.White },
       ]}
-      style={[style, { borderColor: Colors.Primary, backgroundColor: Colors.Primary }]}
+      style={[style, { borderColor: header ? Colors.White : Colors.Primary }]}
       {...props}
     >
       {props.children}

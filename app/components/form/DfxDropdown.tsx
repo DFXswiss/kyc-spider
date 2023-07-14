@@ -12,7 +12,7 @@ interface Props<T> {
   labelProp: string;
   title?: string;
   style?: StyleProp<ViewStyle>;
-  header?: boolean;
+  mode?: string;
 }
 
 const DfxDropdown = <T extends { [key: string]: any }>({
@@ -23,7 +23,7 @@ const DfxDropdown = <T extends { [key: string]: any }>({
   labelProp,
   title,
   style,
-  header,
+  mode,
 }: Props<T>) => {
   const [visible, setVisible] = useState(false);
 
@@ -59,12 +59,11 @@ const DfxDropdown = <T extends { [key: string]: any }>({
 
       <DfxButton
         icon="chevron-down"
-        mode="outlined"
+        mode={mode}
         onPress={() => setVisible(true)}
         contentStyle={styles.button}
         style={style}
         compact
-        header={header}
       >
         {value && value[labelProp]}
       </DfxButton>
