@@ -65,7 +65,7 @@ const HeaderContent = ({
           idProp="symbol"
           labelProp="foreignName"
           title={t("general.select_language")}
-          style={styles.button}
+          style={[styles.button, !device.SM && { width: "100%" }]}
           mode={drawer ? "contained" : "outlined"}
         ></DfxDropdown>
       )}

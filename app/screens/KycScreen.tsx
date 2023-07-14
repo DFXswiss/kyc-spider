@@ -12,8 +12,8 @@ import withSession from "../hocs/withSession";
 import KycInit from "../components/KycInit";
 import { StyleSheet, View } from "react-native";
 import { SpacerV } from "../elements/Spacers";
-import { H2 } from "../elements/Texts";
-import { DataTable, Dialog, Paragraph, Portal } from "react-native-paper";
+import { H1, H3 } from "../elements/Texts";
+import { DataTable, Dialog, Paragraph, Portal, Text } from "react-native-paper";
 import { CompactCell, CompactRow } from "../elements/Tables";
 import AppStyles from "../styles/AppStyles";
 import ButtonContainer from "../components/util/ButtonContainer";
@@ -23,6 +23,7 @@ import KycDataEdit from "../components/edit/KycDataEdit";
 import Iframe from "../components/util/Iframe";
 import ChatbotScreen from "./ChatbotScreen";
 import { groupBy, pickDocuments, sleep } from "../utils/Utils";
+import Colors from "../config/Colors";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -111,7 +112,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
       })
       .catch(() => {
         setIsLoading(false);
-        NotificationService.error(t("model.kyc.chatbot_not_finished"));
+        NotificationService.error(t("model.kyc.bot.not_finished"));
       });
   };
 
@@ -184,6 +185,8 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
       steps[0]
   );
 
+  const statusLabel = t("model.kyc.status") + ": " + t(`model.kyc.status_name.${userInfo?.kycStatus}`);
+
   const continueLabel = (): string => {
     switch (userInfo?.kycStatus) {
       case KycStatus.NOT_STARTED:
@@ -197,28 +200,38 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
     }
   };
 
+  const statusColor = (step: KycStep): string | undefined => {
+    switch (step.status) {
+      case KycStepStatus.NOT_STARTED:
+        return Colors.Disabled;
+      case KycStepStatus.COMPLETED:
+        return Colors.Success;
+      case KycStepStatus.FAILED:
+        return Colors.Error;
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <>
-      <SpacerV height={30} />
-
-      <View style={[AppStyles.containerHorizontal, styles.titleContainer]}>
-        <H2 text={t("model.kyc.title")} />
-        {userInfo && (
-          <Paragraph>
-            {t("model.kyc.status")}: {t(`model.kyc.status_name.${userInfo?.kycStatus}`)}
-          </Paragraph>
-        )}
+      <View style={AppStyles.alignCenter}>
+        <H1 text={t("model.kyc.title")} />
       </View>
-
-      <SpacerV />
+      <SpacerV height={30} />
 
       {userInfo && (
         <>
+          <H3 text={statusLabel} />
+          <SpacerV />
+
           <DataTable>
             {steps.map((step, i) => (
               <CompactRow key={i}>
                 <CompactCell>{t(`model.kyc.step_name.${step.name}`)}</CompactCell>
-                <CompactCell>{t(`model.kyc.step_status.${step.status}`)}</CompactCell>
+                <CompactCell>
+                  <Text style={{ color: statusColor(step) }}>{t(`model.kyc.step_status.${step.status}`)}</Text>
+                </CompactCell>
               </CompactRow>
             ))}
           </DataTable>
@@ -239,9 +252,6 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    justifyContent: "space-between",
-  },
   container: {
     flexDirection: "column",
     justifyContent: "space-between",

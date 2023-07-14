@@ -96,7 +96,7 @@ const Main = () => {
                 key={screen.route}
                 name={screen.route}
                 component={screen.screen}
-                options={{ unmountOnBlur: true, headerTintColor: Colors.White, title: "Onboarding | KYC.ch" }}
+                options={{ unmountOnBlur: true, headerTintColor: Colors.White, title: "Onboarding | KYC Spider" }}
               />
             ))}
           </drawer.Navigator>

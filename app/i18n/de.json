@@ -1,9 +1,88 @@
 {
   "common": {
-    "general": {"select_language":"Sprache auswählen"},
-    "action": {},
-    "feedback": {},
-    "validation": {},
-    "model": {}
+    "general": { "select_language": "Sprache auswählen" },
+    "action": {
+      "search": "Suche",
+      "save": "Speichern",
+      "start": "Start",
+      "next": "Weiter",
+      "resume": "Weiter",
+      "upload": "Hochladen"
+    },
+    "feedback": {
+      "load_failed": "Fehler beim Laden der Daten!",
+      "save_failed": "Fehler beim Speichern!",
+      "file_error": "Fehler beim Lesen der Datei!",
+      "copied": "Kopiert!",
+      "page_not_found": "Seite nicht gefunden!",
+      "pop_up_blocked": "Fehler beim Öffnen! Bitte erlaube Pop-up-Fenster in den Browser-Einstellungen."
+    },
+    "validation": {
+      "required": "Pflichtfeld",
+      "pattern_invalid": "Ungültiges Format",
+      "code_and_number": "Bitte Vorwahl und Nummer ausfüllen"
+    },
+    "model": {
+      "user": {
+        "edit": "Benutzerdaten bearbeiten",
+        "kyc_data": "Identifikationsdaten",
+        "account_type": "Kontotyp",
+        "account_type_name": {
+          "Personal": "Privatkonto",
+          "Business": "Geschäftskonto",
+          "SoleProprietorship": "Einzelunternehmen"
+        },
+        "personal_info": "Persönliche Informationen",
+        "first_name": "Vorname",
+        "last_name": "Nachname",
+        "street": "Strasse",
+        "house_number": "Hausnummer",
+        "zip": "PLZ",
+        "city": "Ort",
+        "country": "Land",
+        "organization_info": "Organisation",
+        "organization_name": "Name der Organisation",
+        "contact_data": "Kontaktdaten",
+        "mail": "E-Mail Adresse",
+        "mobile_number": "Handynummer"
+      },
+      "kyc": {
+        "title": "KYC Demo",
+        "initiating": "Die Verifizierung ist in Vorbereitung, es kann eine Weile dauern. Wir bitten um Geduld.",
+        "status": "Status",
+        "status_name": {
+          "NotStarted": "Nicht angefangen",
+          "InProgress": "In Bearbeitung",
+          "Completed": "Abgeschlossen",
+          "Paused": "Unterbrochen"
+        },
+        "step_name": {
+          "UserData": "Benutzerdaten",
+          "FileUpload": "Dateiupload",
+          "Chatbot": "Chatbot-Onboarding",
+          "OnlineId": "Online-Identifikation",
+          "VideoId": "Video-Identifikation"
+        },
+        "step_status": {
+          "NotStarted": "Nicht angefangen",
+          "InProgress": "In Bearbeitung",
+          "Failed": "Fehlgeschlagen",
+          "Completed": "Abgeschlossen"
+        },
+        "bot": {
+          "sms_header": "Unser Verifikationspartner (KYC Spider) hat dir soeben einen SMS Code zugesendet.",
+          "sms_code": "Bitte gebe diesen hier ein:",
+          "sms_placeholder": "Dein SMS-Code",
+          "sms_help": "Solltest du den SMS Code nicht erhalten haben, wende dich bitte an ",
+          "error": {
+            "missing_session_id": "Fehler: Bitte versuche es später noch einmal.",
+            "validation": "Fehler: Bitte überprüfe deine Antwort.",
+            "wrong_sms": "Fehler: Falscher SMS-Code."
+          },
+          "not_finished": "Fehler! Chatbot noch nicht beendet!",
+          "upload_certificate": "Bitte lade den Handelsregisterauszug deiner Organisation hoch."
+        }
+      }
+    }
   }
 }

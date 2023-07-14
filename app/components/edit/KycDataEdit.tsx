@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { SpacerH, SpacerV } from "../../elements/Spacers";
 import { Country } from "../../models/Country";
 import { UserInfo } from "../../models/User";
@@ -90,7 +90,7 @@ const KycDataEdit = ({ onChanged }: Props) => {
         name="accountType"
         label={t("model.user.account_type")}
         items={Object.values(AccountType)}
-        labelFunc={(i) => t(`model.user.${i.toLowerCase()}`)}
+        labelFunc={(i) => t(`model.user.account_type_name.${i}`)}
       />
       <SpacerV />
 
