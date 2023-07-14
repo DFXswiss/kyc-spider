@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import NotificationService from "../services/NotificationService";
 import { useTranslation } from "react-i18next";
 import Routes from "../config/Routes";
-import { getUser, putKyc } from "../services/ApiService";
+import { getUser, postIncorporationCertificate, putKyc } from "../services/ApiService";
 import SettingsService from "../services/SettingsService";
 import AuthService, { Session } from "../services/AuthService";
 import withSession from "../hocs/withSession";
@@ -13,7 +13,7 @@ import KycInit from "../components/KycInit";
 import { StyleSheet, View } from "react-native";
 import { SpacerV } from "../elements/Spacers";
 import { H2 } from "../elements/Texts";
-import { DataTable, Paragraph } from "react-native-paper";
+import { DataTable, Dialog, Paragraph, Portal } from "react-native-paper";
 import { CompactCell, CompactRow } from "../elements/Tables";
 import AppStyles from "../styles/AppStyles";
 import ButtonContainer from "../components/util/ButtonContainer";
@@ -22,7 +22,7 @@ import DfxModal from "../components/util/DfxModal";
 import KycDataEdit from "../components/edit/KycDataEdit";
 import Iframe from "../components/util/Iframe";
 import ChatbotScreen from "./ChatbotScreen";
-import { groupBy, sleep } from "../utils/Utils";
+import { groupBy, pickDocuments, sleep } from "../utils/Utils";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -40,6 +40,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isInProgress, setIsInProgress] = useState<boolean>(false);
+  const [isFileUploading, setIsFileUploading] = useState(false);
 
   useEffect(() => {
     const params = route.params as any;
@@ -64,22 +65,31 @@ const KycScreen = ({ session }: { session?: Session }) => {
     }
   }, [session]);
 
-  const onLoadFailed = () => {
-    NotificationService.error(t("feedback.load_failed"));
-  };
+  const onLoadFailed = () => NotificationService.error(t("feedback.load_failed"));
 
-  const continueKyc = () => {
+  const continueKyc = (): void | Promise<void> => {
     if (currentStep) {
       setIsInProgress(true);
     } else {
       setIsLoading(true);
 
-      putKyc()
+      return putKyc()
         .then(setUserInfo)
         .then(() => setIsInProgress(true))
         .catch(onLoadFailed)
         .finally(() => setIsLoading(false));
     }
+  };
+
+  const uploadIncorporationCertificate = (): Promise<void> => {
+    return pickDocuments({ type: "public.item", multiple: false })
+      .then((files) => {
+        setIsFileUploading(true);
+        return postIncorporationCertificate(files);
+      })
+      .then(setUserInfo)
+      .catch(() => NotificationService.error(t("feedback.file_error")))
+      .finally(() => setIsFileUploading(false));
   };
 
   const onChatBotFinished = (nthTry = 13): Promise<void> => {
@@ -120,6 +130,23 @@ const KycScreen = ({ session }: { session?: Session }) => {
       >
         <KycDataEdit onChanged={setUserInfo} />
       </DfxModal>
+
+      <Portal>
+        <Dialog
+          visible={isInProgress && currentStep?.name === KycStepName.FILE_UPLOAD}
+          onDismiss={() => setIsInProgress(false)}
+          style={AppStyles.dialog}
+        >
+          <Dialog.Content>
+            <Paragraph>{t("model.kyc.upload_certificate")}</Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <DfxButton onPress={uploadIncorporationCertificate} loading={isFileUploading}>
+              {t("action.upload")}
+            </DfxButton>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
 
       {isInProgress && currentStep && currentStep.sessionUrl ? (
         <>
