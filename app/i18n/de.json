@@ -68,7 +68,8 @@
           "InProgress": "In Bearbeitung",
           "Failed": "Fehlgeschlagen",
           "Completed": "Abgeschlossen"
-        },
+        },  
+        "upload_certificate": "Bitte lade den Handelsregisterauszug deiner Organisation hoch.",
         "bot": {
           "sms_header": "Unser Verifikationspartner (KYC Spider) hat dir soeben einen SMS Code zugesendet.",
           "sms_code": "Bitte gebe diesen hier ein:",
@@ -79,9 +80,8 @@
             "validation": "Fehler: Bitte überprüfe deine Antwort.",
             "wrong_sms": "Fehler: Falscher SMS-Code."
           },
-          "not_finished": "Fehler! Chatbot noch nicht beendet!",
-          "upload_certificate": "Bitte lade den Handelsregisterauszug deiner Organisation hoch."
-        }
+          "not_finished": "Fehler! Chatbot noch nicht beendet!"
+         }
       }
     }
   }
