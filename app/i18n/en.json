@@ -25,6 +25,7 @@
     "model": {
       "user": {
         "edit": "Edit user data",
+        "edit_contact": "Edit contact data",
         "kyc_data": "Identification data",
         "account_type": "Account type",
         "personal_info": "Personal information",

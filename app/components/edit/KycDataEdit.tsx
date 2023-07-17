@@ -159,7 +159,7 @@ const KycDataEdit = ({ onChanged }: Props) => {
 
       <H3 text={t("model.user.contact_data")} />
 
-      <Input name="mail" label={t("model.user.mail")} valueHook={(v: string) => v.trim()} />
+      <Input name="mail" label={t("model.user.mail")} valueHook={(v: string) => (v ? v.trim() : null)} />
       <SpacerV />
 
       <PhoneNumber

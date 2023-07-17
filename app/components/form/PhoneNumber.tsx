@@ -62,7 +62,7 @@ const PhoneNumber = ({
     return getNumber(code, currentNumber.number);
   };
   const updateNumber = (currentNumber: PhoneNumber, number?: string): string => {
-    return getNumber(currentNumber.code, number?.replace(" ", ""));
+    return number ? getNumber(currentNumber.code, number?.replace(" ", "")) : null;
   };
   const getNumber = (code?: PhoneCode, number?: string) => {
     return join([code?.dialCode, number], "");
