@@ -59,7 +59,7 @@
         },
         "step_name": {
           "UserData": "Données personnelles",
-          "FileUpload": "Téléchargement de fichiers",
+          "IncorpCert": "Certificat d'incorporation",
           "Chatbot": "Chatbot",
           "OnlineId": "Identification en ligne",
           "VideoId": "Identification en vidéo"

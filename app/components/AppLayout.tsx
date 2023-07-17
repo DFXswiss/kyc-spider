@@ -7,6 +7,7 @@ import { SpacerV } from "../elements/Spacers";
 import { AppSettings } from "../services/SettingsService";
 import AppStyles from "../styles/AppStyles";
 import Header from "./Header";
+import { useDevice } from "../hooks/useDevice";
 
 interface AppLayoutProps {
   settings?: AppSettings;
@@ -17,11 +18,41 @@ interface AppLayoutProps {
 
 const AppLayout = ({ preventScrolling, removeHeaderSpace, children }: AppLayoutProps) => {
   const dimensions = useWindowDimensions();
+  const device = useDevice();
   const [contentSize, setContentSize] = useState(0);
   const [contentOffset, setContentOffset] = useState(0);
 
   const scrollPosition = contentSize - contentOffset - dimensions.height;
   const scrollRef: RefObject<ScrollView> = createRef();
+
+  const styles = StyleSheet.create({
+    scrollContainer: {
+      minHeight: "100%",
+    },
+    scrollContainerPage: {
+      minHeight: "100%",
+      maxHeight: "100%",
+    },
+    container: {
+      alignItems: "center",
+      padding: Sizes.AppPadding,
+    },
+    headerContainer: {
+      alignItems: "center",
+      paddingHorizontal: Sizes.AppPadding,
+      paddingVertical: device.SM ? Sizes.AppPadding : Sizes.AppPadding / 2,
+      backgroundColor: Colors.White,
+    },
+    appContainer: {
+      width: "100%",
+      maxWidth: Sizes.AppWidth,
+    },
+    fab: {
+      position: "absolute",
+      margin: 16,
+      bottom: 0,
+    },
+  });
 
   return (
     <View style={{ height: dimensions.height }}>
@@ -55,33 +86,5 @@ const AppLayout = ({ preventScrolling, removeHeaderSpace, children }: AppLayoutP
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    minHeight: "100%",
-  },
-  scrollContainerPage: {
-    minHeight: "100%",
-    maxHeight: "100%",
-  },
-  container: {
-    alignItems: "center",
-    padding: Sizes.AppPadding,
-  },
-  headerContainer: {
-    alignItems: "center",
-    padding: Sizes.AppPadding,
-    backgroundColor: Colors.White,
-  },
-  appContainer: {
-    width: "100%",
-    maxWidth: Sizes.AppWidth,
-  },
-  fab: {
-    position: "absolute",
-    margin: 16,
-    bottom: 0,
-  },
-});
 
 export default AppLayout;

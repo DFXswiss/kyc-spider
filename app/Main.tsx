@@ -15,18 +15,15 @@ import AppStyles from "./styles/AppStyles";
 import Colors from "./config/Colors";
 import KycScreen from "./screens/KycScreen";
 import NotFoundScreen from "./screens/NotFoundScreen";
+import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/src/types";
 
-const DrawerContent = () => {
+const DrawerContent = ({ navigation }: { navigation: DrawerNavigationHelpers }) => {
   const device = useDevice();
+
   return (
     <>
-      <View
-        style={[
-          { height: "100%", padding: Sizes.AppPadding, backgroundColor: Colors.Grey },
-          device.SM && AppStyles.noDisplay,
-        ]}
-      >
-        <HeaderContent drawer />
+      <View style={[styles.contentContainer, device.SM && AppStyles.noDisplay]}>
+        <HeaderContent onChange={navigation.closeDrawer} drawer />
       </View>
     </>
   );
@@ -89,7 +86,7 @@ const Main = () => {
         <NavigationContainer linking={linking} ref={navigationRef}>
           <drawer.Navigator
             screenOptions={{ headerShown: false, headerStyle: { backgroundColor: Colors.Primary } }}
-            drawerContent={() => <DrawerContent />}
+            drawerContent={(props) => <DrawerContent {...props} />}
           >
             {screens.map((screen) => (
               <drawer.Screen
@@ -107,6 +104,11 @@ const Main = () => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    height: "100%",
+    padding: Sizes.AppPadding,
+    backgroundColor: Colors.Grey,
+  },
   snackWrapper: {
     bottom: Sizes.AppPadding,
     alignItems: "center",

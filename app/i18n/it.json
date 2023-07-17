@@ -59,7 +59,7 @@
         },
         "step_name": {
           "UserData": "Dati utente",
-          "FileUpload": "Caricamento dei file",
+          "IncorpCert": "Atto costitutivo",
           "Chatbot": "Chatbot",
           "OnlineId": "Identificazione online",
           "VideoId": "Identificazione video"

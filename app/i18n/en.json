@@ -59,7 +59,7 @@
         },
         "step_name": {
           "UserData": "User data",
-          "FileUpload": "File upload",
+          "IncorpCert": "Certificate of incorporation",
           "Chatbot": "Chatbot onboarding",
           "OnlineId": "Online identification",
           "VideoId": "Video identification"

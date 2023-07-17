@@ -44,7 +44,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
   // UI state
   const [isLoading, setIsLoading] = useState(true);
   const [isInProgress, setIsInProgress] = useState<boolean>(false);
-  const [isFileUploading, setIsFileUploading] = useState(false);
+  const [isCoiUploading, setIsCoiUploading] = useState(false);
 
   useEffect(() => {
     const params = route.params as any;
@@ -84,15 +84,15 @@ const KycScreen = ({ session }: { session?: Session }) => {
     }
   };
 
-  const uploadIncorporationCertificate = (): Promise<void> => {
+  const uploadCoi = (): Promise<void> => {
     return pickDocuments({ type: "public.item", multiple: false })
       .then((files) => {
-        setIsFileUploading(true);
+        setIsCoiUploading(true);
         return postIncorporationCertificate(files);
       })
       .then(setUserInfo)
       .catch(() => NotificationService.error(t("feedback.file_error")))
-      .finally(() => setIsFileUploading(false));
+      .finally(() => setIsCoiUploading(false));
   };
 
   const onChatBotFinished = (nthTry = 13): Promise<void> => {
@@ -137,7 +137,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
 
       <Portal>
         <Dialog
-          visible={isInProgress && currentStep?.name === KycStepName.FILE_UPLOAD}
+          visible={isInProgress && currentStep?.name === KycStepName.INCORP_CERT}
           onDismiss={() => setIsInProgress(false)}
           style={AppStyles.dialog}
         >
@@ -145,7 +145,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
             <Paragraph>{t("model.kyc.upload_certificate")}</Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <DfxButton onPress={uploadIncorporationCertificate} loading={isFileUploading}>
+            <DfxButton onPress={uploadCoi} loading={isCoiUploading}>
               {t("action.upload")}
             </DfxButton>
           </Dialog.Actions>

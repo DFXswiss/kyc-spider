@@ -18,10 +18,12 @@ const HeaderContent = ({
   settings,
   session,
   drawer,
+  onChange,
 }: {
   settings?: AppSettings;
   session?: Session;
   drawer?: boolean;
+  onChange?: () => void;
 }) => {
   const { t } = useTranslation();
   const device = useDevice();
@@ -36,6 +38,7 @@ const HeaderContent = ({
 
   const getLanguage = (symbol: string): Language | undefined =>
     SettingsService.Languages.find((l) => l.symbol === symbol);
+
   const languageChanged = (update: SetStateAction<Language | undefined>) => {
     const language = resolve(update, getLanguage(selectedLanguage));
     if (language) {
@@ -44,6 +47,8 @@ const HeaderContent = ({
       if (session?.isLoggedIn) {
         putUser({ language });
       }
+
+      onChange?.();
     }
   };
 
