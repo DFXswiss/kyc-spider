@@ -279,7 +279,6 @@ const ChatbotScreen = ({
       {!isLoading && !isSMSCompleted && (
         <View style={styles.container}>
           <View>
-            <SpacerV height={20} />
             <H2 text={t("model.kyc.bot.sms_header")} />
             <SpacerV />
             <View style={[AppStyles.containerHorizontal, styles.header]}>

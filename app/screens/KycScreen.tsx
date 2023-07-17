@@ -121,7 +121,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
   return (
     <AppLayout
       preventScrolling={currentStep?.name === KycStepName.CHATBOT}
-      removeHeaderSpace={currentStep?.name === KycStepName.CHATBOT}
+      removeHeaderSpace={isInProgress && currentStep?.sessionUrl != null}
     >
       <KycInit isVisible={isLoading} setIsVisible={setIsLoading} />
 
@@ -155,6 +155,11 @@ const KycScreen = ({ session }: { session?: Session }) => {
       {isInProgress && currentStep && currentStep.sessionUrl ? (
         <>
           <View style={styles.container}>
+            <View style={[AppStyles.containerHorizontal]}>
+              <View style={[AppStyles.mla, { marginVertical: -6, marginRight: -6 }]}>
+                <IconButton icon="close" color={Colors.Primary} onPress={() => setIsInProgress(false)} />
+              </View>
+            </View>
             {currentStep?.setupUrl && (
               <View style={styles.hiddenIframe}>
                 <Iframe src={currentStep.setupUrl} />
