@@ -37,5 +37,7 @@ export interface UserInfo {
 }
 
 export interface Settings {
-  language: Language;
+  language?: Language;
+  mail?: string;
+  phone?: string;
 }

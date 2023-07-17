@@ -11,6 +11,7 @@ interface Props {
   last?: boolean;
   children: ReactNode;
   style?: StyleProp<TextStyle>;
+  onPress?: () => void;
 }
 
 export const CompactHeader = ({ children, style, ...props }: Props) => (

@@ -13,7 +13,7 @@ import KycInit from "../components/KycInit";
 import { StyleSheet, View } from "react-native";
 import { SpacerV } from "../elements/Spacers";
 import { H1, H3 } from "../elements/Texts";
-import { DataTable, Dialog, Paragraph, Portal, Text } from "react-native-paper";
+import { DataTable, Dialog, IconButton, Paragraph, Portal, Text } from "react-native-paper";
 import { CompactCell, CompactRow } from "../elements/Tables";
 import AppStyles from "../styles/AppStyles";
 import ButtonContainer from "../components/util/ButtonContainer";
@@ -25,6 +25,8 @@ import ChatbotScreen from "./ChatbotScreen";
 import { groupBy, pickDocuments, sleep } from "../utils/Utils";
 import Colors from "../config/Colors";
 import { ApiError } from "../models/ApiDto";
+import { useDevice } from "../hooks/useDevice";
+import ContactDataEdit from "../components/edit/ContactDataEdit";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -168,14 +170,25 @@ const KycScreen = ({ session }: { session?: Session }) => {
           </View>
         </>
       ) : (
-        <UserData userInfo={userInfo} onContinue={continueKyc} />
+        <UserData userInfo={userInfo} onChanged={setUserInfo} onContinue={continueKyc} />
       )}
     </AppLayout>
   );
 };
 
-const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: () => void }) => {
+const UserData = ({
+  userInfo,
+  onChanged,
+  onContinue,
+}: {
+  userInfo?: UserInfo;
+  onChanged: (info: UserInfo) => void;
+  onContinue: () => void;
+}) => {
   const { t } = useTranslation();
+  const device = useDevice();
+
+  const [isUserEdit, setIsUserEdit] = useState(false);
 
   const steps = Array.from(groupBy(userInfo?.kycSteps ?? [], "name").entries()).map(
     ([_, steps]) =>
@@ -213,8 +226,26 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
     }
   };
 
+  const isEditable = (step: KycStep): boolean => {
+    return step.name === KycStepName.USER_DATA && step.status === KycStepStatus.COMPLETED;
+  };
+
+  const userEdited = (info: UserInfo) => {
+    onChanged(info);
+    setIsUserEdit(false);
+  };
+
   return (
     <>
+      <DfxModal
+        isVisible={isUserEdit}
+        setIsVisible={setIsUserEdit}
+        title={t("model.user.edit_contact")}
+        style={{ width: 500 }}
+      >
+        <ContactDataEdit onChanged={userEdited} />
+      </DfxModal>
+
       <View style={AppStyles.alignCenter}>
         <H1 text={t("model.kyc.title")} />
       </View>
@@ -226,12 +257,28 @@ const UserData = ({ userInfo, onContinue }: { userInfo?: UserInfo; onContinue: (
           <SpacerV />
 
           <DataTable>
-            {steps.map((step, i) => (
-              <CompactRow key={i}>
-                <CompactCell>{t(`model.kyc.step_name.${step.name}`)}</CompactCell>
-                <CompactCell>
-                  <Text style={{ color: statusColor(step) }}>{t(`model.kyc.step_status.${step.status}`)}</Text>
-                </CompactCell>
+            {steps.map((step) => (
+              <CompactRow
+                key={step.name}
+                style={{ minHeight: 37 }}
+                onPress={isEditable(step) && !device.SM ? () => setIsUserEdit(true) : undefined}
+              >
+                <CompactCell multiLine>{t(`model.kyc.step_name.${step.name}`)}</CompactCell>
+                <View style={{ flex: device.SM ? 2 : 1, flexDirection: "row" }}>
+                  <CompactCell multiLine>
+                    <Text style={{ color: statusColor(step) }}>{t(`model.kyc.step_status.${step.status}`)}</Text>
+                  </CompactCell>
+                  {isEditable(step) && (
+                    <CompactCell style={{ flex: undefined }}>
+                      <IconButton
+                        color={Colors.Primary}
+                        icon="account-edit-outline"
+                        onPress={() => setIsUserEdit(true)}
+                        style={{ margin: 0 }}
+                      />
+                    </CompactCell>
+                  )}
+                </View>
               </CompactRow>
             ))}
           </DataTable>

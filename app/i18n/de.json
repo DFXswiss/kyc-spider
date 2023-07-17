@@ -25,6 +25,7 @@
     "model": {
       "user": {
         "edit": "Benutzerdaten bearbeiten",
+        "edit_contact": "Kontaktdaten bearbeiten",
         "kyc_data": "Identifikationsdaten",
         "account_type": "Kontotyp",
         "account_type_name": {
@@ -68,7 +69,7 @@
           "InProgress": "In Bearbeitung",
           "Failed": "Fehlgeschlagen",
           "Completed": "Abgeschlossen"
-        },  
+        },
         "upload_certificate": "Bitte lade den Handelsregisterauszug deiner Organisation hoch.",
         "bot": {
           "sms_header": "Unser Verifikationspartner (KYC Spider) hat dir soeben einen SMS Code zugesendet.",
@@ -81,7 +82,7 @@
             "wrong_sms": "Fehler: Falscher SMS-Code."
           },
           "not_finished": "Fehler! Chatbot noch nicht beendet!"
-         }
+        }
       }
     }
   }
