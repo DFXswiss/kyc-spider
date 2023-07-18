@@ -1,0 +1,89 @@
+{
+  "common": {
+    "general": { "select_language": "Choose language" },
+    "action": {
+      "search": "Search",
+      "save": "Save",
+      "start": "Start",
+      "next": "Next",
+      "resume": "Resume",
+      "upload": "Upload"
+    },
+    "feedback": {
+      "load_failed": "Error loading the data!",
+      "save_failed": "Error while saving!",
+      "file_error": "Error reading the file!",
+      "copied": "Copied!",
+      "page_not_found": "Page not found!",
+      "pop_up_blocked": "Error while opening! Please allow pop-up windows in the browser settings."
+    },
+    "validation": {
+      "required": "Mandatory field",
+      "pattern_invalid": "Invalid format",
+      "code_and_number": "Please fill in area code and number"
+    },
+    "model": {
+      "user": {
+        "edit": "Edit user data",
+        "edit_contact": "Edit contact data",
+        "kyc_data": "Identification data",
+        "account_type": "Account type",
+        "personal_info": "Personal information",
+        "first_name": "First name",
+        "last_name": "Last name",
+        "street": "Street",
+        "house_number": "House number",
+        "zip": "ZIP Code",
+        "country": "Country",
+        "mail": "E-mail address",
+        "mobile_number": "Mobile number",
+        "account_type_name": {
+          "Personal": "Personal account",
+          "Business": "Business account",
+          "SoleProprietorship": "Sole proprietorship"
+        },
+        "city": "City",
+        "organization_info": "Organization",
+        "organization_name": "Organization name",
+        "contact_data": "Contact data"
+      },
+      "kyc": {
+        "title": "KYC Demo",
+        "initiating": "Verification is in preparation, it may take a while. We ask for patience.",
+        "status": "Status",
+        "status_name": {
+          "NotStarted": "Not started",
+          "InProgress": "In progress",
+          "Completed": "Completed",
+          "Paused": "Paused"
+        },
+        "step_name": {
+          "UserData": "User data",
+          "IncorpCert": "Certificate of incorporation",
+          "Chatbot": "Chatbot onboarding",
+          "OnlineId": "Online identification",
+          "VideoId": "Video identification"
+        },
+        "step_status": {
+          "NotStarted": "Not started",
+          "InProgress": "In progress",
+          "Failed": "Failed",
+          "Completed": "Completed"
+        },
+        "upload_certificate": "Please upload the commercial register extract of your organization.",
+        "bot": {
+          "sms_header": "Our verification partner (KYC Spider) has sent you a SMS code.",
+          "sms_code": "Please enter it here:",
+          "sms_placeholder": "Your SMS code",
+          "sms_help": "If you have not received the SMS code, please contact ",
+          "error": {
+            "missing_session_id": "Error: Please try again later.",
+            "validation": "Error: Please check your answer.",
+            "wrong_sms": "Error: Wrong SMS code."
+          },
+          "not_finished": "Error! Chatbot not finished!"
+        }
+      }
+    }
+  }
+}
