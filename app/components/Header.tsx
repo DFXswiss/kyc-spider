@@ -36,7 +36,7 @@ const Header = () => {
 
   return (
     <View style={[AppStyles.containerHorizontal, styles.container]}>
-      {!device.SM && <IconButton icon="menu" onPress={() => nav.toggleDrawer()} style={{ marginRight: 10 }} />}
+      {!device.SM && <IconButton icon="menu" onPress={() => nav.toggleDrawer()} style={AppStyles.mr10} />}
 
       <View style={styles.logoContainer}>
         <TouchableOpacity activeOpacity={1} style={styles.logoTouch}>

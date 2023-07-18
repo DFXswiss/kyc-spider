@@ -42,14 +42,14 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "{JWT_SECRET}"
-          replace: ${{ secrets.JWT_SECRET }}
+          replace: ${{ secrets.PRD_JWT_SECRET }}
           regex: false
 
       - name: Update mandator
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "{MANDATOR}"
-          replace: ${{ secrets.MANDATOR }}
+          replace: ${{ secrets.PRD_MANDATOR }}
           regex: false§
 
       - name: Build for web
