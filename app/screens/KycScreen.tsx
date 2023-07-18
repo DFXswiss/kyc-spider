@@ -152,7 +152,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
         </Dialog>
       </Portal>
 
-      {isInProgress && currentStep && currentStep.sessionUrl ? (
+      {isInProgress && currentStep?.sessionUrl ? (
         <>
           <View style={styles.container}>
             <View style={[AppStyles.containerHorizontal]}>
@@ -160,7 +160,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
                 <IconButton icon="close" color={Colors.Primary} onPress={() => setIsInProgress(false)} />
               </View>
             </View>
-            {currentStep?.setupUrl && (
+            {currentStep.setupUrl && (
               <View style={styles.hiddenIframe}>
                 <Iframe src={currentStep.setupUrl} />
               </View>
@@ -195,7 +195,7 @@ const UserData = ({
 
   const [isUserEdit, setIsUserEdit] = useState(false);
 
-  const steps = Array.from(groupBy(userInfo?.kycSteps ?? [], "name").entries()).map(
+  const stepsToDisplay = Array.from(groupBy(userInfo?.kycSteps ?? [], "name").entries()).map(
     ([_, steps]) =>
       steps.find((s) => s.status === KycStepStatus.IN_PROGRESS) ??
       steps.find((s) => s.status === KycStepStatus.NOT_STARTED) ??
@@ -262,7 +262,7 @@ const UserData = ({
           <SpacerV />
 
           <DataTable>
-            {steps.map((step) => (
+            {stepsToDisplay.map((step) => (
               <CompactRow
                 key={step.name}
                 style={{ minHeight: 37 }}
