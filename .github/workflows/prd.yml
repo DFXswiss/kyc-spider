@@ -50,7 +50,7 @@ jobs:
         with:
           find: "{MANDATOR}"
           replace: ${{ secrets.PRD_MANDATOR }}
-          regex: false§
+          regex: false
 
       - name: Build for web
         run: expo build:web
