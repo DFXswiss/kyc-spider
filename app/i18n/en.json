@@ -24,6 +24,7 @@
     },
     "model": {
       "user": {
+        "new": "Create user",
         "edit": "Edit user data",
         "edit_contact": "Edit contact data",
         "kyc_data": "Identification data",

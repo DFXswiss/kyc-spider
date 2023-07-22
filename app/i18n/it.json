@@ -24,6 +24,7 @@
     },
     "model": {
       "user": {
+        "new": "Creare un utente",
         "edit": "Modificare i dati dell'utente",
         "edit_contact": "Modificare i dati di contatto",
         "kyc_data": "Dati di identificazione",
