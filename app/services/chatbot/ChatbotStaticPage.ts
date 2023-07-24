@@ -57,20 +57,16 @@ enum Property {
 const retrieveValue = (page: ChatbotStaticPage, property: Property): ChatbotLanguageValues => {
   const languageValues: ChatbotLanguageValues = {};
   Object.entries(availableLanguages).forEach(([key, value]) => {
+    let retValue: string | null;
     switch (property) {
       case Property.HEADER:
-        languageValues[key] = value[page].header.replace("{{name}}", Environment.name);
-        break;
+        retValue = value[page].header;
       case Property.BODY:
-        languageValues[key] = value[page].body.replace("{{name}}", Environment.name);
-        break;
+        retValue = value[page].body;
       case Property.ANSWER:
-        const answer = value[page].answer;
-        if (answer !== null) {
-          languageValues[key] = answer.replace("{{name}}", Environment.name);
-        }
-        break;
+        retValue = value[page].answer;
     }
+    if (retValue) languageValues[key] = retValue.replace("{{name}}", Environment.mandator.name);
   });
   return languageValues;
 };
