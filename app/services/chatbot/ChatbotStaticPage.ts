@@ -1,7 +1,8 @@
 import { ChatbotAnswer, ChatbotAPIConfirmations, ChatbotLanguageValues, ChatbotPage } from "../../models/ChatbotData";
-import en from "./static-pages/en.json"
-import de from "./static-pages/de.json"
-import fr from "./static-pages/fr.json"
+import en from "./static-pages/en.json";
+import de from "./static-pages/de.json";
+import fr from "./static-pages/fr.json";
+import { Environment } from "../../env/Environment";
 
 export enum ChatbotStaticPage {
   START = "start",
@@ -10,21 +11,33 @@ export enum ChatbotStaticPage {
 }
 
 const availableLanguages = {
-  "en": en, 
-  "de": de, 
-  "fr": fr
-}
+  en: en,
+  de: de,
+  fr: fr,
+};
 
-export const shouldExchangeWithStaticPage = (pages?: ChatbotPage[], confirmations?: ChatbotAPIConfirmations, answer?: ChatbotAnswer): ChatbotStaticPage|undefined => {
+export const shouldExchangeWithStaticPage = (
+  pages?: ChatbotPage[],
+  confirmations?: ChatbotAPIConfirmations,
+  answer?: ChatbotAnswer
+): ChatbotStaticPage | undefined => {
   if (pages === undefined || pages.length === 0) {
-    return ChatbotStaticPage.START
-  } else if (hasOnlyOneAnswerPossibility(answer) && confirmations?.confirmsForm === "NO" && confirmations?.informsOfChanges === "NO") {
-    return ChatbotStaticPage.ALL_ANSWERS_CORRECT
-  } else if (hasOnlyOneAnswerPossibility(answer) && confirmations?.confirmsForm === "YES" && confirmations?.informsOfChanges === "NO") {
-    return ChatbotStaticPage.INFORM_OF_CHANGE_CONFIRMATION
+    return ChatbotStaticPage.START;
+  } else if (
+    hasOnlyOneAnswerPossibility(answer) &&
+    confirmations?.confirmsForm === "NO" &&
+    confirmations?.informsOfChanges === "NO"
+  ) {
+    return ChatbotStaticPage.ALL_ANSWERS_CORRECT;
+  } else if (
+    hasOnlyOneAnswerPossibility(answer) &&
+    confirmations?.confirmsForm === "YES" &&
+    confirmations?.informsOfChanges === "NO"
+  ) {
+    return ChatbotStaticPage.INFORM_OF_CHANGE_CONFIRMATION;
   }
-  return undefined
-}
+  return undefined;
+};
 
 export const createStaticPage = (page: ChatbotStaticPage, answer?: ChatbotAnswer): ChatbotPage => {
   return {
@@ -32,8 +45,8 @@ export const createStaticPage = (page: ChatbotStaticPage, answer?: ChatbotAnswer
     body: retrieveValue(page, Property.BODY),
     bodyHasSupportLink: page === ChatbotStaticPage.INFORM_OF_CHANGE_CONFIRMATION,
     answer: exchangeLanguageValues(page, answer),
-  }
-}
+  };
+};
 
 enum Property {
   HEADER,
@@ -42,40 +55,36 @@ enum Property {
 }
 
 const retrieveValue = (page: ChatbotStaticPage, property: Property): ChatbotLanguageValues => {
-  const languageValues: ChatbotLanguageValues = {}
+  const languageValues: ChatbotLanguageValues = {};
   Object.entries(availableLanguages).forEach(([key, value]) => {
+    let retValue: string | null;
     switch (property) {
       case Property.HEADER:
-        languageValues[key] = value[page].header
-        break
+        retValue = value[page].header;
       case Property.BODY:
-        languageValues[key] = value[page].body
-        break
+        retValue = value[page].body;
       case Property.ANSWER:
-        const answer = value[page].answer
-        if (answer !== null) {
-          languageValues[key] = answer
-        }
-        break
+        retValue = value[page].answer;
     }
-  })
-  return languageValues
-}
+    if (retValue) languageValues[key] = retValue.replace("{{name}}", Environment.mandator.name);
+  });
+  return languageValues;
+};
 
-const exchangeLanguageValues = (page: ChatbotStaticPage, answer?: ChatbotAnswer): ChatbotAnswer|undefined => {
+const exchangeLanguageValues = (page: ChatbotStaticPage, answer?: ChatbotAnswer): ChatbotAnswer | undefined => {
   if (answer === undefined) {
-    return answer
+    return answer;
   }
-  let changedValues = retrieveValue(page, Property.ANSWER)
+  let changedValues = retrieveValue(page, Property.ANSWER);
   if (Object.keys(changedValues).length !== 0 && answer.data.length > 0) {
-    answer.data[0].label = changedValues
+    answer.data[0].label = changedValues;
   }
-  return answer
-}
+  return answer;
+};
 
 const hasOnlyOneAnswerPossibility = (answer?: ChatbotAnswer): boolean => {
   if (answer === undefined) {
-    return false
+    return false;
   }
-  return answer.data.length === 1
-}
+  return answer.data.length === 1;
+};

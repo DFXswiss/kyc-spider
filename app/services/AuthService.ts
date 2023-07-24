@@ -29,7 +29,7 @@ export class Session implements ISession {
   constructor(reference: string) {
     const data = {
       user: reference,
-      mandator: Environment.mandator,
+      mandator: Environment.mandator.reference,
     };
 
     this.accessToken = jwtEncode(data, Environment.api.jwtSecret);
