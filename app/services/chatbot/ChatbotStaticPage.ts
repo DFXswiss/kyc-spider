@@ -61,10 +61,13 @@ const retrieveValue = (page: ChatbotStaticPage, property: Property): ChatbotLang
     switch (property) {
       case Property.HEADER:
         retValue = value[page].header;
+        break;
       case Property.BODY:
         retValue = value[page].body;
+        break;
       case Property.ANSWER:
         retValue = value[page].answer;
+        break;
     }
     if (retValue) languageValues[key] = retValue.replace("{{name}}", Environment.mandator.name);
   });
