@@ -1,6 +1,6 @@
 {
   "start": {
-    "header": "Bienvenue, je suis votre chatbot et ensemble, nous allons vérifier votre compte pour DFX.",
+    "header": "Bienvenue, je suis votre chatbot et ensemble, nous allons vérifier votre compte pour {{name}}.",
     "body": "Afin de pouoir vous vérifier, j'ai besoin d'informations complémentaires pour être en règle avec la politique anti-blanchiment (ABA) et autres régulations.",
     "answer": null
   },
@@ -10,7 +10,7 @@
     "answer": "Toutes les réponses sont correctes."
   },
   "inform_of_change": {
-    "header": "Veuillez confirmer que vous vous engagez à avertir DFX de tout changement relatif à ces informations.",
+    "header": "Veuillez confirmer que vous vous engagez à avertir {{name}} de tout changement relatif à ces informations.",
     "body": "Communiquez tout changement immédiatement par e-mail :",
     "answer": null
   }
