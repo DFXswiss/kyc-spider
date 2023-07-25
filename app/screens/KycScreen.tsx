@@ -73,6 +73,11 @@ const KycScreen = ({ session }: { session?: Session }) => {
   const continueKyc = (): void | Promise<void> => {
     if (currentStep) {
       setIsInProgress(true);
+      if ([KycStepName.ONLINE_ID, KycStepName.VIDEO_ID].includes(currentStep.name)) {
+        // show spinner (loading the iframe takes some time)
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 5000);
+      }
     } else {
       setIsLoading(true);
 
@@ -306,7 +311,6 @@ const UserData = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    justifyContent: "space-between",
     flex: 1,
   },
   hiddenIframe: {
