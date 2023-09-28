@@ -1,12 +1,11 @@
 import React from "react";
-import Sizes from "../../config/Sizes";
 
 // use react-native-webview on native?
-const Iframe = ({ src }: { src: string }) => {
+const Iframe = ({ src, width, height }: { src: string; width: number; height: number }) => {
   return React.createElement("iframe", {
     src: src,
     frameBorder: "0",
-    style: { width: Sizes.AppWidth, height: "800px" },
+    style: { width, height },
     allow: "camera *; microphone *",
     allowfullscreen: "",
   });
