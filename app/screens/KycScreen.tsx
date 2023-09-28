@@ -27,6 +27,7 @@ import Colors from "../config/Colors";
 import { ApiError } from "../models/ApiDto";
 import { useDevice } from "../hooks/useDevice";
 import ContactDataEdit from "../components/edit/ContactDataEdit";
+import Sizes from "../config/Sizes";
 
 const KycScreen = ({ session }: { session?: Session }) => {
   const { t } = useTranslation();
@@ -45,6 +46,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isInProgress, setIsInProgress] = useState<boolean>(false);
   const [isCoiUploading, setIsCoiUploading] = useState(false);
+  const [iframeWidth, setIframeWidth] = useState(Sizes.AppWidth);
 
   useEffect(() => {
     const params = route.params as any;
@@ -159,7 +161,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
 
       {isInProgress && currentStep?.sessionUrl ? (
         <>
-          <View style={styles.container}>
+          <View style={styles.container} onLayout={(e) => setIframeWidth(e.nativeEvent.layout.width)}>
             <View style={[AppStyles.containerHorizontal]}>
               <View style={[AppStyles.mla, { marginVertical: -6, marginRight: -6 }]}>
                 <IconButton icon="close" color={Colors.Primary} onPress={() => setIsInProgress(false)} />
@@ -167,7 +169,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
             </View>
             {currentStep.setupUrl && (
               <View style={styles.hiddenIframe}>
-                <Iframe src={currentStep.setupUrl} />
+                <Iframe src={currentStep.setupUrl} width={iframeWidth} height={800} />
               </View>
             )}
             {currentStep.name === KycStepName.CHATBOT ? (
@@ -175,7 +177,7 @@ const KycScreen = ({ session }: { session?: Session }) => {
                 <ChatbotScreen sessionUrl={currentStep.sessionUrl} onFinish={onChatBotFinished} />
               </View>
             ) : (
-              <Iframe src={currentStep.sessionUrl} />
+              <Iframe src={currentStep.sessionUrl} width={iframeWidth} height={900} />
             )}
           </View>
         </>
